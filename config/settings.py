@@ -25,12 +25,7 @@ SECRET_KEY = "django-insecure-57l#op0kikv(^8)9sx5^!kpsrzthukxiu)jlxj5h=umzx3@6n!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
-
-
-# Application definition
-
-
+# ALLOWED_HOSTS = ["*"]
 # INSTALLED_APPS = [
 #     "django.contrib.admin",
 #     "django.contrib.auth",
@@ -42,7 +37,28 @@ ALLOWED_HOSTS = ["*"]
 #     "social_django",
 #     "mainapp",
 #     "authapp",
+#     "crispy_forms",
 # ]
+# MIDDLEWARE = [
+#     "django.middleware.security.SecurityMiddleware",
+#     "django.contrib.sessions.middleware.SessionMiddleware",
+#     "django.middleware.common.CommonMiddleware",
+#     "django.middleware.csrf.CsrfViewMiddleware",
+#     "django.contrib.auth.middleware.AuthenticationMiddleware",
+#     "django.contrib.messages.middleware.MessageMiddleware",
+#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+# ]
+
+ALLOWED_HOSTS = ["*"]
+
+if DEBUG:
+    INTERNAL_IPS = [
+        "192.168.1.4",
+        "127.0.0.1",
+    ]
+
+
+# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -56,6 +72,7 @@ INSTALLED_APPS = [
     "mainapp",
     "authapp",
     "crispy_forms",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -66,7 +83,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
 
 ROOT_URLCONF = "config.urls"
 
@@ -231,4 +250,15 @@ LOGGING = {
             "handlers": ["file"],
         },
     },
+}
+
+# In the end of file
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
 }
